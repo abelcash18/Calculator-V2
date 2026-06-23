@@ -162,32 +162,49 @@ const factorial = () =>{
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-            console.log('Service Worker registered with scope:', registration.scope);
+        console.log('[PWA] Attempting service worker registration...');
+        navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
+            console.log('[PWA] Service Worker registered with scope:', registration.scope);
         }, function(err) {
-            console.log('Service Worker registration failed:', err);
+            console.log('[PWA] Service Worker registration failed:', err);
         });
     });
+} else {
+    console.log('[PWA] serviceWorker not supported in this browser');
 }
 
 // Handle Install Prompt
 let deferredPrompt;
 let installBtn = document.getElementById('installBtn')
+
+console.log('[PWA] install button initial display:', installBtn?.style?.display);
+
 window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('[PWA] beforeinstallprompt fired');
     e.preventDefault();
     deferredPrompt = e;
     installBtn.style.display = 'block';
 
     installBtn.addEventListener('click', () => {
+        console.log('[PWA] Install button clicked');
         installBtn.style.display = 'none';
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
+                console.log('[PWA] User accepted the install prompt');
             } else {
-                console.log('User dismissed the install prompt');
+                console.log('[PWA] User dismissed the install prompt');
             }
             deferredPrompt = null;
         });
-    });
+    }, { once: true });
 });
+
+// Debug: if prompt never fires, log after a short delay
+setTimeout(() => {
+    if (!deferredPrompt) {
+        console.log('[PWA] beforeinstallprompt did not fire (app may not be installable).');
+        // Keep the button hidden; this is only for debugging.
+    }
+}, 5000);
+
