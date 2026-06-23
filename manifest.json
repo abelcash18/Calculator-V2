@@ -7,23 +7,25 @@
     "theme_color": "#317EFB",
     "description": "A simple calculator web app for your convenience.",
     "orientation": "portrait",
+    "scope": "./",
     "icons": [
       {
         "src": "icon-1.jpg",
         "sizes": "50x50",
-        "type": "image/jpg",
-        "purpose": "any"
+        "type": "image/jpeg"
       },
       {
         "src": "icon-192.jpg",
         "sizes": "192x192",
-        "type": "image/jpg"
+        "type": "image/jpeg"
       },
       {
-        "src": "icon-512.jpg",
+        "src": "icon-515.png",
         "sizes": "512x512",
-        "type": "image/jpg"
+        "type": "image/png"
       }
     ]
   }
+
+
   
