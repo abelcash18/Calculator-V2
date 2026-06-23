@@ -10,14 +10,14 @@
     "scope": "./",
     "icons": [
       {
-        "src": "icon-1.jpg",
+        "src": "icon-1.png",
         "sizes": "50x50",
-        "type": "image/jpeg"
+        "type": "image/png"
       },
       {
-        "src": "icon-192.jpg",
+        "src": "icon-192.png",
         "sizes": "192x192",
-        "type": "image/jpeg"
+        "type": "image/png"
       },
       {
         "src": "icon-515.png",

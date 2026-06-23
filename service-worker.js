@@ -6,7 +6,7 @@ self.addEventListener('install', event => {
           './index.html',
           './cal.css',
           './cal.js',
-          './icon-1.jpg',
+          './icon-1.png',
         ]);
       })
     );
