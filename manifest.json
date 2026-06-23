@@ -1,5 +1,5 @@
 {
-    "name": "Conquer Calculator",
+    "name": "AbelTech Solutions Calculator",
     "short_name": "CC",
     "start_url": "./index.html",
     "display": "standalone",
@@ -9,20 +9,20 @@
     "orientation": "portrait",
     "icons": [
       {
-        "src": "icon-1.png",
+        "src": "icon-1.jpg",
         "sizes": "50x50",
-        "type": "image/png",
+        "type": "image/jpg",
         "purpose": "any"
       },
       {
-        "src": "icon-192.png",
+        "src": "icon-192.jpg",
         "sizes": "192x192",
-        "type": "image/png"
+        "type": "image/jpg"
       },
       {
-        "src": "icon-512.png",
+        "src": "icon-512.jpg",
         "sizes": "512x512",
-        "type": "image/png"
+        "type": "image/jpg"
       }
     ]
   }
