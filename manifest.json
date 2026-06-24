@@ -24,20 +24,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "icon-515.png",
-      "sizes": "1280x800",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Desktop Install UI"
-    },
-    {
-      "src": "icon-515.png",
-      "sizes": "375x667",
-      "type": "image/png",
-      "label": "Mobile Install UI"
-    }
   ]
 }
