@@ -47,7 +47,7 @@ const clearfun = ()=>{
     display.value = "";
 }
 const calculate =()=>{
-    if(display.value!=""){
+    if(display.value!==""){
         try{
             sumdisplay.value = eval(display.value)
         }
@@ -129,6 +129,7 @@ const sin = () =>{
 const cos = () =>{
     sumdisplay.value = Math.cos(display.value)
 }
+
 //function for tan
 const tan = () =>{
     sumdisplay.value = Math.tan(display.value)
@@ -152,19 +153,12 @@ const factorial = () =>{
     sumdisplay.value = result
 }
 
-
-
-
-
-
-
-
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         console.log('[PWA] Attempting service worker registration...');
         navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
             console.log('[PWA] Service Worker registered with scope:', registration.scope);
+            console.log('[PWA] SW controller (null means first load):', navigator.serviceWorker.controller);
         }, function(err) {
             console.log('[PWA] Service Worker registration failed:', err);
         });
@@ -214,11 +208,19 @@ window.addEventListener('beforeinstallprompt', (e) => {
     };
 });
 
-// Debug: if prompt never fires, log after a short delay
-setTimeout(() => {
+// Debug/diagnostics: if prompt never fires, log after a short delay
+setTimeout(async () => {
     if (!deferredPrompt) {
         console.log('[PWA] beforeinstallprompt did not fire (app may not be installable).');
-        // Keep the button hidden; this is only for debugging.
+
+        if (navigator.getInstalledRelatedApps) {
+            try {
+                const related = await navigator.getInstalledRelatedApps();
+                console.log('[PWA] getInstalledRelatedApps result:', related);
+            } catch (e) {
+                console.log('[PWA] getInstalledRelatedApps failed:', e);
+            }
+        }
     }
 }, 5000);
 

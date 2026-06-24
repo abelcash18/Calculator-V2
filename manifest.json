@@ -1,7 +1,9 @@
 {
   "name": "AbelTech Solutions Calculator",
   "short_name": "ATS",
+  "id": "abeltech-calculator",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#317EFB",
@@ -26,3 +28,4 @@
     }
   ]
 }
+
