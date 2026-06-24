@@ -1,31 +1,43 @@
 {
-    "name": "AbelTech Solutions Calculator",
-    "short_name": "CC",
-    "start_url": "./index.html",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#317EFB",
-    "description": "A simple calculator web app for your convenience.",
-    "orientation": "portrait",
-    "scope": "./",
-    "icons": [
-      {
-        "src": "icon-1.png",
-        "sizes": "50x50",
-        "type": "image/png"
-      },
-      {
-        "src": "icon-192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "icon-515.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
-  }
-
-
-  
+  "name": "AbelTech Solutions Calculator",
+  "short_name": "ATS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#317EFB",
+  "description": "A simple calculator web app for your convenience.",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-1.png",
+      "sizes": "50x50",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-515.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icon-515.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop Install UI"
+    },
+    {
+      "src": "icon-515.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "label": "Mobile Install UI"
+    }
+  ]
+}

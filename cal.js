@@ -181,23 +181,37 @@ console.log('[PWA] install button initial display:', installBtn?.style?.display)
 
 window.addEventListener('beforeinstallprompt', (e) => {
     console.log('[PWA] beforeinstallprompt fired');
+
+    // Only allow prompting if we have a real deferred prompt
     e.preventDefault();
     deferredPrompt = e;
+
+    // Show button whenever the browser says the app is installable
     installBtn.style.display = 'block';
 
-    installBtn.addEventListener('click', () => {
+    // Remove any previous handler so we don't stack listeners across events
+    installBtn.onclick = null;
+
+    installBtn.onclick = async () => {
         console.log('[PWA] Install button clicked');
         installBtn.style.display = 'none';
+
+        if (!deferredPrompt) return;
+
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
+        try {
+            const choiceResult = await deferredPrompt.userChoice;
             if (choiceResult.outcome === 'accepted') {
                 console.log('[PWA] User accepted the install prompt');
             } else {
                 console.log('[PWA] User dismissed the install prompt');
             }
+        } catch (err) {
+            console.log('[PWA] userChoice failed:', err);
+        } finally {
             deferredPrompt = null;
-        });
-    }, { once: true });
+        }
+    };
 });
 
 // Debug: if prompt never fires, log after a short delay
