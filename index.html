@@ -7,118 +7,104 @@
     <link rel="icon" href="icon-1.png" type="image/png">
     <link rel="stylesheet" href="cal.css">
     <link rel="manifest" href="manifest.json">
-    <script src="https://kit.fontawesome.com/e943f317aa.js" crossorigin="anonymous"></script>
     <link rel="apple-touch-icon" href="icon-1.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icon-1.png">
     <link rel="apple-touch-startup-image" href="splashscreen.jpg">
-    
 </head>
 <body>
     <button id="installBtn" class="installBtn" style="display:none;">Install App</button>
-    <div class="calContainer">
-        <div class="sideNav">
-            <div>
-                <h4>Calculator</h4>
-                <ul>
-                    <li>Standard</li>
-                    <li>Scientific</li>
-                    <li>Date calculation</li>
-                </ul>
-            </div>
-            <div>
-                <h4>Converter</h4>
-                <ul>
-                    <li>Currency</li>
-                    <li>Volume</li>
-                    <li>Length</li>
-                    <li>Weight and Mass</li>
-                    <li>Temperature</li>
-                    <li>Energy</li>
-                    <li>Area</li>
-                    <li>Speed</li>
-                    <li>Data</li>
-                </ul>
-            </div>
-        </div>
-        <div class="theme">
-            <button id="showMenu" class="themeBtn">&#9776; <span id="methodName">Standard</span></button>
-            <button class="themeBtn" id="sunBtn">&sext;</button>
-            <!-- <i id="sunBtn" class="fa-regular fa-sun"></i> -->
-            <!-- <i id="moonBtn" class="fa-regular fa-moon"></i> -->
+
+    <div class="sideNav">
+        <div>
+            <h4>Calculator</h4>
+            <ul>
+                <li>Standard</li>
+                <li>Scientific</li>
+                <li>Quick math</li>
+            </ul>
         </div>
         <div>
-            <input id="displayy" type="text" readonly>
-            <input id="display" type="text" readonly>
+            <h4>Tools</h4>
+            <ul>
+                <li>Trig</li>
+                <li>Logarithms</li>
+                <li>Constants</li>
+            </ul>
         </div>
-        <div id="key">
-            <button onclick="clearfunc()" class="equator">AC</button>
-            <button onclick="deleteLast()" class="equator">D</button>
-            <button onclick="clearfun()" class="equator">CE</button>
-            <button onclick="appendToDisplay('/')" class="equator">/</button>
+    </div>
 
-            <button onclick="appendToDisplay('7')">7</button>
-            <button onclick="appendToDisplay('8')">8</button>
-            <button onclick="appendToDisplay('9')">9</button>
-            <button onclick="appendToDisplay('*')" class="equator">X</button>
-            
-            <button onclick="appendToDisplay('4')">4</button>
-            <button onclick="appendToDisplay('5')">5</button>
-            <button onclick="appendToDisplay('6')">6</button>
-            <button onclick="appendToDisplay('-')" class="equator">-</button>
+    <div class="app-shell">
+        <div class="calculator-card">
+            <div class="card-header">
+                <div class="title-group">
+                    <div class="brand-dot"></div>
+                    <div>
+                        <p class="eyebrow">Smart</p>
+                        <h1>Calculator</h1>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="showMenu" class="ghost-btn" aria-label="Toggle menu">☰</button>
+                    <button id="toggleScience" class="ghost-btn">Sci</button>
+                    <button id="themeToggle" class="ghost-btn" aria-label="Toggle theme">☀</button>
+                </div>
+            </div>
 
-            <button onclick="appendToDisplay('1')">1</button>
-            <button onclick="appendToDisplay('2')">2</button>
-            <button onclick="appendToDisplay('3')">3</button>
-            <button onclick="appendToDisplay('+')" class="equator">+</button>
-            
-            <button onclick="appendToDisplay('0')">0</button>
-            <button onclick="appendToDisplay('.')">.</button>
-            <button onclick="calculate()">=</button>
-            <button id="sciFunc"> &ReverseUpEquilibrium;</button>
-        </div>
-        <div id="key" class="sciCal">
+            <div class="display-area">
+                <div id="displayy" class="expression-display" aria-live="polite"></div>
+                <input id="display" class="main-display" type="text" inputmode="decimal" readonly>
+            </div>
 
-            <button onclick="exponent()" class="changeValue">&xfr;<sup>2</sup></button>
-            <button onclick="appendToDisplay('**')" class="changeValue">&xfr;<sup>&yopf;</sup></button>
-            <button onclick="sin()" class="changeValue">sin</button>
-            <button onclick="cos()" class="changeValue">cos</button>
-            <button onclick="tan()" class="changeValue">tan</button>
+            <div class="mode-row">
+                <button id="modeToggle" class="mode-pill">Deg</button>
+                <span class="mode-label">Angle mode</span>
+            </div>
 
-            <button onclick="squareRoot()" class="changeValue">&Sqrt;</button>
-            <button onclick="tenRaise()" class="changeValue">10<sup>&xfr;</sup></button>
-            <button onclick="logarithm()" class="changeValue">log</button>
-            <button onclick="exponential()" class="changeValue">Exp</button>
-            <button onclick="appendToDisplay('%')" class="changeValue">Mod</button>
+            <div id="keypad" class="keypad">
+                <button class="key action" data-action="clear-all">AC</button>
+                <button class="key action" data-action="delete">⌫</button>
+                <button class="key action" data-action="clear-entry">CE</button>
+                <button class="key operator" data-value="/">÷</button>
 
-            <button id="changeBtn">&UpArrow;</button>
-            <button onclick="clearfunc()" class="equator">AC</button>
-            <button onclick="deleteLast()" class="equator">D</button>
-            <button onclick="clearfun()" class="equator">CE</button>
-            <button onclick="appendToDisplay('/')" class="equator">/</button>
-            
-            <button>&pi;</button>
-            <button class="num" onclick="appendToDisplay('7')">7</button>
-            <button class="num" onclick="appendToDisplay('8')">8</button>
-            <button class="num" onclick="appendToDisplay('9')">9</button>
-            <button onclick="appendToDisplay('*')" class="equator">X</button>
+                <button class="key number" data-value="7">7</button>
+                <button class="key number" data-value="8">8</button>
+                <button class="key number" data-value="9">9</button>
+                <button class="key operator" data-value="*">×</button>
 
-            <button onclick="factorial()">n&excl;</button>
-            <button class="num" onclick="appendToDisplay('4')">4</button>
-            <button class="num" onclick="appendToDisplay('5')">5</button>
-            <button class="num" onclick="appendToDisplay('6')">6</button>
-            <button onclick="appendToDisplay('-')" class="equator">-</button>
+                <button class="key number" data-value="4">4</button>
+                <button class="key number" data-value="5">5</button>
+                <button class="key number" data-value="6">6</button>
+                <button class="key operator" data-value="-">−</button>
 
-            <button onclick="appendToDisplay('.')">.</button>
-            <button class="num" onclick="appendToDisplay('1')">1</button>
-            <button class="num" onclick="appendToDisplay('2')">2</button>
-            <button class="num" onclick="appendToDisplay('3')">3</button>
-            <button onclick="appendToDisplay('+')" class="equator">+</button>
-            
-            <button>(</button>
-            <button>)</button>
-            <button class="num" onclick="appendToDisplay('0')">0</button>
-            <button onclick="calculate()">=</button>
-            <button id="sciFunc2">&ReverseUpEquilibrium;</button>
+                <button class="key number" data-value="1">1</button>
+                <button class="key number" data-value="2">2</button>
+                <button class="key number" data-value="3">3</button>
+                <button class="key operator" data-value="+">+</button>
+
+                <button class="key number" data-value="0">0</button>
+                <button class="key number" data-value=".">.</button>
+                <button class="key action" data-action="parenthesis">()</button>
+                <button class="key operator equals" data-action="equals">=</button>
+            </div>
+
+            <div id="scientificPad" class="scientific-pad hidden">
+                <button class="key sci" data-action="square">x²</button>
+                <button class="key sci" data-action="power">xʸ</button>
+                <button class="key sci" data-action="sqrt">√</button>
+                <button class="key sci" data-action="pow10">10ˣ</button>
+                <button class="key sci" data-action="factorial">x!</button>
+
+                <button class="key sci" data-action="sin">sin</button>
+                <button class="key sci" data-action="cos">cos</button>
+                <button class="key sci" data-action="tan">tan</button>
+                <button class="key sci" data-action="log">log</button>
+                <button class="key sci" data-action="ln">ln</button>
+
+                <button class="key sci" data-action="exp">exp</button>
+                <button class="key sci" data-action="pi">π</button>
+                <button class="key sci" data-action="e">e</button>
+                <button class="key sci" data-action="negate">±</button>
+                <button class="key sci" data-action="percent">%</button>
+            </div>
         </div>
     </div>
 

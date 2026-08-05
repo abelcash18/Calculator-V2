@@ -1,206 +1,314 @@
-*{
+* {
+    box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body{
-    height: 100vh;
-    width: 100%;
+body {
+    margin: 0;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden !important;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%), url('pexels-jeshoots-com-147458-714699.jpg');
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(6, 10, 24, 0.95), rgba(25, 39, 73, 0.9)), url('pexels-jeshoots-com-147458-714699.jpg');
     background-size: cover;
-    background-position: bottom;
-    background-repeat: no-repeat;
+    background-position: center;
+    padding: 24px;
+    color: #f7f8fc;
+    transition: background 0.3s ease;
 }
-.installBtn{
+
+body.light-theme {
+    background: linear-gradient(135deg, #f8fbff, #dde8ff);
+    color: #111827;
+}
+
+.installBtn {
     position: absolute;
-    top: 20px;
-    left: 50%;
-    padding: 10px;
-}
-.calContainer{
-    background-color: hsl(0, 0%, 10%);
-    max-width: 300px;
-    border-radius: 15px;
-    overflow: hidden;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    position: relative;
-}
-#key{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-    gap: 10px;
-    padding: 20px;
-    background-color: hsl(0, 0%, 15%);
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    height: 50%;
-    margin-top: 20px;
-    overflow: hidden;
-    
-}
-     .cute-footer{
-    position: fixed;
-    bottom: 20px;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px 24px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
- }
- .cute-footer p{
-    margin: 0;
-    color: #191919;
-    font-size: 0.9rem;
-    text-align: center;
-    letter-spacing: 1px;
- } 
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f172a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+    z-index: 10;
+}
 
+.app-shell {
+    width: min(100%, 360px);
+}
 
-#display{
-    width: 90%;
-    padding: 10px 0px;
-    margin: 0 10px;
-    border: none;
-    background-color: hsl(0, 0%, 10%);
-    color: white;
-    font-size: 2em;
-    text-align: right;
-    font-weight: bold;
+.calculator-card {
+    background: rgba(9, 15, 29, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    padding: 18px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
 }
-#displayy{
-    width: 90%;
-    padding: 10px 0px;
-    margin: 0 10px;
-    border: none;
-    background-color: hsl(0, 0%, 10%);
-    color: white;
-    font-size: 16px;
-    text-align: right;
+
+body.light-theme .calculator-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #0f172a;
 }
-input:focus{
-    outline: none;
-}
-button{
-    border-radius: 10px;
-    border: none;
-    background-color: hsl(0, 0%, 20%);
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-}
-button:hover{
-    background-color: hsl(0, 0%, 60%);
-    cursor: pointer;
-}
-button:active{
-    background-color: hsl(0, 0%, 70%);
-}
-.equator{
-    background-color: hsl(35, 100%, 55%);
-}
-.theme{
-    background-color: transparent !important;
-    /* background-color: hsl(0, 0%, 15%); */
-    /* width: 20%; */
-    transform: translateY(-30px);
-    padding: 0px 10px;
+
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border-radius: 30px; */
-    color: white;
-    /* margin: auto; */
+    margin-bottom: 16px;
 }
-.themeBtn{
-    font-size: 1.5em;
-    border-radius: 0px;
+
+.title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+}
+
+.eyebrow {
+    margin: 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+h1 {
+    margin: 2px 0 0;
+    font-size: 1.2rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.ghost-btn,
+.mode-pill,
+.key {
     border: none;
-    background-color: transparent;
-    color: rgb(211, 211, 211);
-    font-weight: lighter;
+    transition: transform 0.15s ease, background 0.2s ease;
 }
-.themeBtn:hover{
-    background-color: transparent;
+
+.ghost-btn {
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: inherit;
 }
-.theme i{
+
+body.light-theme .ghost-btn {
+    background: rgba(15, 23, 42, 0.07);
+}
+
+.ghost-btn:hover,
+.key:hover,
+.mode-pill:hover {
+    transform: translateY(-1px);
     cursor: pointer;
 }
 
-.sciCal{
-    grid-template-columns: repeat(5, 1fr) !important;
-    grid-template-rows: auto;
-    position: absolute;
-    gap: 8px !important;
-    transform: translateY(100%);
+.display-area {
+    padding: 14px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-bottom: 12px;
 }
-.sciCal button{
-    border-radius: 2px;
+
+body.light-theme .display-area {
+    background: rgba(15, 23, 42, 0.05);
+}
+
+.expression-display {
+    min-height: 22px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.68);
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.light-theme .expression-display {
+    color: rgba(15, 23, 42, 0.68);
+}
+
+.main-display {
+    width: 100%;
     border: none;
-    background-color: hsl(0, 0%, 20%);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-}
-.sciCal button:hover{
-    background-color: hsl(0, 0%, 60%);
-    cursor: pointer;
-}
-.sciCal button:active{
-    background-color: hsl(0, 0%, 70%);
-}
-.num{
-    background-color: hsl(0, 0%, 70%) !important;
-}
-.num:hover{
-    background-color: hsl(0, 0%, 20%) !important;
-}
-.num:active{
-    background-color: hsl(0, 0%, 40%) !important;
-}
-.sciCalShow{
-    transform: translateY(0);
-    transition: all 0.2s linear;
-}
-.sciCalShow2{
-    transform: translateY(100%);
-    transition: all 0.2s linear;
+    background: transparent;
+    color: inherit;
+    font-size: 2rem;
+    text-align: right;
+    font-weight: 600;
 }
 
-
-.sideNav{
-    position: absolute;
-    top: 60px;
-    left: 0;
-    background-color: hsl(0, 0%, 20%);
-    color: hsl(0, 0%, 100%);
-    width: 70%;
-    padding: 10px 15px;
-    margin: 0;
-    transform: translateX(-100%);
+.main-display:focus {
+    outline: none;
 }
-.sideNav h4{
-    margin: 0;
+
+.mode-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 10px;
 }
-.sideNav ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-.sideNav ul li{
-    padding: 10px 0;
+
+.mode-pill {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(249, 115, 22, 0.16);
+    color: #fb923c;
+    font-weight: 600;
 }
 
-.showSideNav{
-    transform: translateX(0%);
-    transition: 0.2s ease-in-out;
+.mode-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.keypad,
+.scientific-pad {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.scientific-pad {
+    margin-top: 10px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.key {
+    padding: 12px 8px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+body.light-theme .key {
+    background: rgba(15, 23, 42, 0.06);
+}
+
+.key:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+body.light-theme .key:hover {
+    background: rgba(15, 23, 42, 0.11);
+}
+
+.key.operator,
+.key.action,
+.key.equals {
+    background: rgba(249, 115, 22, 0.18);
+    color: #fb923c;
+}
+
+.key.equals {
+    background: linear-gradient(135deg, #fb923c, #f97316);
+    color: white;
+}
+
+.key.sci {
+    font-size: 0.95rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.sideNav {
+    position: absolute;
+    top: 72px;
+    left: 24px;
+    background: rgba(9, 15, 29, 0.92);
+    color: #f8fafc;
+    width: min(78vw, 220px);
+    padding: 16px;
+    border-radius: 18px;
+    transform: translateX(-120%);
+    transition: transform 0.2s ease;
+    z-index: 5;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+body.light-theme .sideNav {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+}
+
+.sideNav h4 {
+    margin: 0 0 8px;
+}
+
+.sideNav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+}
+
+.sideNav ul li {
+    padding: 8px 0;
+    opacity: 0.85;
+}
+
+.showSideNav {
+    transform: translateX(0);
+}
+
+.cute-footer {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px 18px;
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cute-footer p {
+    margin: 0;
+    color: #f8fafc;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+body.light-theme .cute-footer {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+body.light-theme .cute-footer p {
+    color: #0f172a;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .calculator-card {
+        padding: 14px;
+    }
+
+    .key {
+        padding: 11px 6px;
+    }
 }

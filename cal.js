@@ -1,226 +1,259 @@
-const display = document.getElementById('display')
-const sumdisplay = document.getElementById('displayy')
-const sunBtn = document.getElementById('sunBtn')
-// const moonBtn = document.getElementById('moonBtn')
-let showMenu = document.getElementById('showMenu')
-showMenu.addEventListener('click', ()=>{
-    document.querySelector('.sideNav').classList.toggle('showSideNav')
-})
-document.addEventListener('click', (e)=>{
-    if(!showMenu.contains(e.target) &&!document.querySelector('.sideNav').contains(e.target)){
-        document.querySelector('.sideNav').classList.remove('showSideNav')
+const display = document.getElementById('display');
+const expressionDisplay = document.getElementById('displayy');
+const showMenuButton = document.getElementById('showMenu');
+const scientificPad = document.getElementById('scientificPad');
+const toggleScienceButton = document.getElementById('toggleScience');
+const themeToggle = document.getElementById('themeToggle');
+const modeToggle = document.getElementById('modeToggle');
+const installBtn = document.getElementById('installBtn');
+
+let angleMode = 'deg';
+let deferredPrompt;
+
+const setDisplayValue = (value) => {
+    display.value = value;
+};
+
+const appendToDisplay = (value) => {
+    const current = display.value;
+    const lastChar = current.slice(-1);
+
+    if (value === '.' && current === '') {
+        setDisplayValue('0.');
+        return;
     }
 
-})
-
-const calContainer = document.querySelector('.calContainer')
-sunBtn.addEventListener('click', ()=> {
-    calContainer.style.backgroundColor = 'white'
-    display.style.backgroundColor = 'white'
-    display.style.color = 'black'
-    sumdisplay.style.backgroundColor = 'white'
-    sumdisplay.style.color = 'black'
-    document.getElementById('key').style.backgroundColor = "#f8f9fa"
-    document.querySelector('.themeBtn').style.color = 'black'
-    sunBtn.style.color = "black"
-    // document.getElementsByTagName('button').style.backgroundColor = "green"
-
-})
-// moonBtn.addEventListener('click', ()=>{
-//     calContainer.style.backgroundColor = ''
-//     display.style.backgroundColor = ''
-//     display.style.color = ''
-//     sumdisplay.style.backgroundColor = ''
-//     sumdisplay.style.color = ''
-//     document.getElementById('key').style.backgroundColor = ""
-//     document.querySelector('.theme').style.backgroundColor = ''
-//     document.querySelector('.theme').style.color = ''
-// })
-const appendToDisplay = (val) =>{
-    display.value += val;
-}
-const clearfunc = ()=>{
-    display.value = "";
-    sumdisplay.value = "";
-}
-const clearfun = ()=>{
-    display.value = "";
-}
-const calculate =()=>{
-    if(display.value!==""){
-        try{
-            sumdisplay.value = eval(display.value)
-        }
-        catch{
-            sumdisplay.value = "Error"
-        }
-    }else{
-        sumdisplay.value = ""
+    if (value === '.' && lastChar === '.') {
+        return;
     }
-}
 
-const deleteLast = () =>{
-    display.value = display.value.slice(0, -1);
-}
+    if (['+', '-', '*', '/', '%'].includes(value) && ['+', '-', '*', '/', '%'].includes(lastChar)) {
+        setDisplayValue(current.slice(0, -1) + value);
+        return;
+    }
 
-// function for scientific calculations
-let sciFunc = document.getElementById('sciFunc')
-let changeBtn = document.getElementById('changeBtn')
-let changeValue = document.querySelectorAll('.changeValue')
-let valueArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+    setDisplayValue(current + value);
+};
 
-let originalContent = [];
-let newContent = [
-    `<button class="changeValue">&xfr;<sup>3</sup></button>`,
-    `<button><small>&Sqrt;&xfr;</small></button>`,
-    `<button><small>sin<sup><small>-1</small></sup></small></button>`,
-    `<button><small>cos<sup><small>-1</small></sup></small></button>`,
-    `<button><small>tan<sup><small>-1</small></sup></small></button>`,
-    `<button><small>&frac12;</small></button>`,
-    `<button><small>e<sup>&xfr;</sup></small></button>`,
-    `<button><small>ln</small></button>`,
-    `<button><small>dms</small></button>`,
-    `<button><small>deg</small></button>`
-  ];
+const clearAll = () => {
+    setDisplayValue('');
+    expressionDisplay.textContent = '';
+};
 
-let isChanged = false;
+const clearEntry = () => {
+    setDisplayValue('');
+};
 
-// Store original content
-changeValue.forEach((element, index) => {
-  originalContent.push(element.innerHTML);
+const deleteLast = () => {
+    setDisplayValue(display.value.slice(0, -1));
+};
+
+const sanitizeExpression = (expression) => {
+    return expression
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/%/g, '/100');
+};
+
+const evaluateExpression = () => {
+    const rawExpression = display.value.trim();
+    if (!rawExpression) {
+        expressionDisplay.textContent = '';
+        return;
+    }
+
+    try {
+        const sanitizedExpression = sanitizeExpression(rawExpression);
+        const result = Function('"use strict"; return (' + sanitizedExpression + ')')();
+        if (!Number.isFinite(result)) {
+            throw new Error('Invalid result');
+        }
+        expressionDisplay.textContent = `${rawExpression} =`;
+        setDisplayValue(String(result));
+    } catch (error) {
+        expressionDisplay.textContent = 'Error';
+        setDisplayValue('');
+    }
+};
+
+const applyFunction = (callback) => {
+    const rawValue = display.value.trim();
+    if (!rawValue) {
+        return;
+    }
+
+    try {
+        const value = Number(rawValue);
+        const result = callback(value);
+        expressionDisplay.textContent = `${rawValue}`;
+        setDisplayValue(String(result));
+    } catch (error) {
+        expressionDisplay.textContent = 'Error';
+        setDisplayValue('');
+    }
+};
+
+const insertConstant = (value) => {
+    appendToDisplay(String(value));
+};
+
+const toggleScientificPad = () => {
+    scientificPad.classList.toggle('hidden');
+    toggleScienceButton.textContent = scientificPad.classList.contains('hidden') ? 'Sci' : 'Hide';
+};
+
+const toggleTheme = () => {
+    document.body.classList.toggle('light-theme');
+    themeToggle.textContent = document.body.classList.contains('light-theme') ? '☾' : '☀';
+};
+
+const toggleAngleMode = () => {
+    angleMode = angleMode === 'deg' ? 'rad' : 'deg';
+    modeToggle.textContent = angleMode === 'deg' ? 'Deg' : 'Rad';
+};
+
+const convertAngle = (value) => (angleMode === 'deg' ? (value * Math.PI) / 180 : value);
+
+const handleScientificAction = (action) => {
+    switch (action) {
+        case 'square':
+            applyFunction((value) => value * value);
+            break;
+        case 'power':
+            appendToDisplay('**');
+            break;
+        case 'sqrt':
+            applyFunction((value) => Math.sqrt(value));
+            break;
+        case 'pow10':
+            applyFunction((value) => 10 ** value);
+            break;
+        case 'factorial':
+            applyFunction((value) => {
+                if (value < 0 || !Number.isInteger(value)) {
+                    throw new Error('Only non-negative integers');
+                }
+                let result = 1;
+                for (let i = 2; i <= value; i += 1) {
+                    result *= i;
+                }
+                return result;
+            });
+            break;
+        case 'sin':
+            applyFunction((value) => Math.sin(convertAngle(value)));
+            break;
+        case 'cos':
+            applyFunction((value) => Math.cos(convertAngle(value)));
+            break;
+        case 'tan':
+            applyFunction((value) => Math.tan(convertAngle(value)));
+            break;
+        case 'log':
+            applyFunction((value) => Math.log10(value));
+            break;
+        case 'ln':
+            applyFunction((value) => Math.log(value));
+            break;
+        case 'exp':
+            applyFunction((value) => Math.exp(value));
+            break;
+        case 'pi':
+            insertConstant(Math.PI);
+            break;
+        case 'e':
+            insertConstant(Math.E);
+            break;
+        case 'negate':
+            if (display.value.startsWith('-')) {
+                setDisplayValue(display.value.slice(1));
+            } else {
+                setDisplayValue(`-${display.value}`);
+            }
+            break;
+        case 'percent':
+            appendToDisplay('%');
+            break;
+        default:
+            break;
+    }
+};
+
+showMenuButton.addEventListener('click', () => {
+    document.querySelector('.sideNav').classList.toggle('showSideNav');
 });
 
-changeBtn.addEventListener('click', () => {
-  changeValue.forEach((element, index) => {
-    if (!isChanged) {
-      element.innerHTML = newContent[index];
-    } else {
-      element.innerHTML = originalContent[index];
+document.addEventListener('click', (event) => {
+    const sideNav = document.querySelector('.sideNav');
+    if (!showMenuButton.contains(event.target) && !sideNav.contains(event.target)) {
+        sideNav.classList.remove('showSideNav');
     }
-  });
-  isChanged = !isChanged;
 });
 
-sciFunc.addEventListener('click', ()=>{
-    document.querySelector('.sciCal').classList.add("sciCalShow")
-    document.getElementById('methodName').textContent = "Scientific"
-})
-document.getElementById('sciFunc2').addEventListener('click', ()=>{
-    document.querySelector('.sciCal').classList.toggle("sciCalShow")
-    document.getElementById('methodName').textContent = "Standard"
-})
+document.querySelectorAll('.key.number').forEach((button) => {
+    button.addEventListener('click', () => appendToDisplay(button.dataset.value));
+});
 
-// function for square root
-const squareRoot = () =>{
-    sumdisplay.value = Math.sqrt(display.value)
-}
+document.querySelectorAll('.key.operator').forEach((button) => {
+    button.addEventListener('click', () => {
+        if (button.dataset.action === 'equals') {
+            evaluateExpression();
+        } else {
+            appendToDisplay(button.dataset.value);
+        }
+    });
+});
 
-//function for logarithm
-const logarithm = () =>{
-    sumdisplay.value = Math.log(display.value)
-}
+document.querySelectorAll('.key.action').forEach((button) => {
+    button.addEventListener('click', () => {
+        const action = button.dataset.action;
+        if (action === 'clear-all') {
+            clearAll();
+        } else if (action === 'clear-entry') {
+            clearEntry();
+        } else if (action === 'delete') {
+            deleteLast();
+        } else if (action === 'parenthesis') {
+            const current = display.value;
+            const openCount = (current.match(/\(/g) || []).length;
+            const closeCount = (current.match(/\)/g) || []).length;
+            appendToDisplay(openCount > closeCount ? ')' : '(');
+        }
+    });
+});
 
-//function for sin
-const sin = () =>{
-    sumdisplay.value = Math.sin(display.value)
-}
+document.querySelectorAll('.key.sci').forEach((button) => {
+    button.addEventListener('click', () => handleScientificAction(button.dataset.action));
+});
 
-//function for cos
-const cos = () =>{
-    sumdisplay.value = Math.cos(display.value)
-}
-
-//function for tan
-const tan = () =>{
-    sumdisplay.value = Math.tan(display.value)
-}
-
-// function for 10 raise to the power of value inputted
-const tenRaise = () =>{
-    sumdisplay.value = 10**(display.value)
-}
-// function for exponentiation
-const exponent = () =>{
-    sumdisplay.value = display.value**2
-}
-
-// function for factorial
-const factorial = () =>{
-    let result = 1
-    for(let i = 2; i <= display.value; i++){
-        result *= i
-    }
-    sumdisplay.value = result
-}
+toggleScienceButton.addEventListener('click', toggleScientificPad);
+themeToggle.addEventListener('click', toggleTheme);
+modeToggle.addEventListener('click', toggleAngleMode);
 
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        console.log('[PWA] Attempting service worker registration...');
-        navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
-            console.log('[PWA] Service Worker registered with scope:', registration.scope);
-            console.log('[PWA] SW controller (null means first load):', navigator.serviceWorker.controller);
-        }, function(err) {
-            console.log('[PWA] Service Worker registration failed:', err);
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
+            console.log('[PWA] Service worker registered', registration.scope);
+        }).catch(function (error) {
+            console.log('[PWA] Service worker registration failed', error);
         });
     });
-} else {
-    console.log('[PWA] serviceWorker not supported in this browser');
 }
 
-// Handle Install Prompt
-let deferredPrompt;
-let installBtn = document.getElementById('installBtn')
-
-console.log('[PWA] install button initial display:', installBtn?.style?.display);
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('[PWA] beforeinstallprompt fired');
-
-    // Only allow prompting if we have a real deferred prompt
-    e.preventDefault();
-    deferredPrompt = e;
-
-    // Show button whenever the browser says the app is installable
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
     installBtn.style.display = 'block';
-
-    // Remove any previous handler so we don't stack listeners across events
-    installBtn.onclick = null;
-
     installBtn.onclick = async () => {
-        console.log('[PWA] Install button clicked');
         installBtn.style.display = 'none';
-
-        if (!deferredPrompt) return;
-
-        deferredPrompt.prompt();
-        try {
-            const choiceResult = await deferredPrompt.userChoice;
-            if (choiceResult.outcome === 'accepted') {
-                console.log('[PWA] User accepted the install prompt');
-            } else {
-                console.log('[PWA] User dismissed the install prompt');
-            }
-        } catch (err) {
-            console.log('[PWA] userChoice failed:', err);
-        } finally {
-            deferredPrompt = null;
+        if (!deferredPrompt) {
+            return;
         }
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult.outcome === 'accepted') {
+            console.log('[PWA] User accepted the install prompt');
+        }
+        deferredPrompt = null;
     };
 });
-
-// Debug/diagnostics: if prompt never fires, log after a short delay
-setTimeout(async () => {
-    if (!deferredPrompt) {
-        console.log('[PWA] beforeinstallprompt did not fire (app may not be installable).');
-
-        if (navigator.getInstalledRelatedApps) {
-            try {
-                const related = await navigator.getInstalledRelatedApps();
-                console.log('[PWA] getInstalledRelatedApps result:', related);
-            } catch (e) {
-                console.log('[PWA] getInstalledRelatedApps failed:', e);
-            }
-        }
-    }
-}, 5000);
-
