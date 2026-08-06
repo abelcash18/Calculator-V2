@@ -42,3 +42,5 @@ self.addEventListener('fetch', event => {
   );
 });
 
+const CACHE_NAME = "pwa-cache-v2"; // increment version
+

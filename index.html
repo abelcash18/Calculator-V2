@@ -11,7 +11,7 @@
     <link rel="apple-touch-startup-image" href="splashscreen.jpg">
 </head>
 <body>
-    <button id="installBtn" class="installBtn" style="display:none;">Install App</button>
+    <button id="installBtn" class="installBtn is-hidden">Install App</button>
 
     <div class="sideNav">
         <div>
@@ -50,7 +50,9 @@
             </div>
 
             <div class="display-area">
+                <label class="sr-only" for="displayy">Expression</label>
                 <div id="displayy" class="expression-display" aria-live="polite"></div>
+                <label class="sr-only" for="display">Current value</label>
                 <input id="display" class="main-display" type="text" inputmode="decimal" readonly>
             </div>
 

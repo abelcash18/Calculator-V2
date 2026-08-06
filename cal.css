@@ -37,6 +37,10 @@ body.light-theme {
     z-index: 10;
 }
 
+.installBtn.is-hidden {
+    display: none;
+}
+
 .app-shell {
     width: min(100%, 360px);
 }
@@ -297,6 +301,18 @@ body.light-theme .cute-footer {
 
 body.light-theme .cute-footer p {
     color: #0f172a;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 @media (max-width: 480px) {
