@@ -257,3 +257,8 @@ window.addEventListener('beforeinstallprompt', (event) => {
         deferredPrompt = null;
     };
 });
+
+if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+    const socket = new WebSocket("ws://127.0.0.1:5501/index.html/ws");
+    // live reload logic
+}
